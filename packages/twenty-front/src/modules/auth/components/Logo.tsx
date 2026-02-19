@@ -56,24 +56,24 @@ export const Logo = ({
   onClick,
 }: LogoProps) => {
   const { redirectToDefaultDomain } = useRedirectToDefaultDomain();
-  const defaultPrimaryLogoUrl = `${window.location.origin}/branding/abcorp-logo.png`;
+  const defaultPrimaryLogoUrl = `${window.location.origin}/branding/abcorp-logo.svg`;
 
   // For static files in /public/, use the URL directly without getImageAbsoluteURI
   // getImageAbsoluteURI is for server-uploaded files in /files/, not static assets
   // Static files in /public/ are served directly at the root path
   const getLogoUrl = (logo: string | null | undefined): string => {
     if (!logo) return defaultPrimaryLogoUrl;
-    
+
     // If it's already a full URL, use it directly
     if (logo.startsWith('http://') || logo.startsWith('https://')) {
       return logo;
     }
-    
+
     // If it starts with /, it's a static file - use it directly
     if (logo.startsWith('/')) {
       return `${window.location.origin}${logo}`;
     }
-    
+
     // Otherwise, it's a server-uploaded file - use getImageAbsoluteURI
     return getImageAbsoluteURI({
       imageUrl: logo,
@@ -95,7 +95,19 @@ export const Logo = ({
           to={AppPath.SignInUp}
           onClick={redirectToDefaultDomain}
         >
-          <StyledPrimaryLogo src={primaryLogoUrl} alt="AB Corp" />
+          <StyledPrimaryLogo
+            src={primaryLogoUrl}
+            alt="AB Corp"
+            onError={(e) => {
+              // Fallback to PNG if SVG fails
+              const target = e.target as HTMLImageElement;
+              if (
+                target.src !== `${window.location.origin}/branding/abcorp-logo.png`
+              ) {
+                target.src = '/branding/abcorp-logo.png';
+              }
+            }}
+          />
         </UndecoratedLink>
       ) : (
         <StyledPrimaryLogo src={primaryLogoUrl} alt="AB Corp" />
