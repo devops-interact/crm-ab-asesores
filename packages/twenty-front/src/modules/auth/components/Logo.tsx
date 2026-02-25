@@ -105,7 +105,13 @@ export const Logo = ({
       )}
       {isDefined(secondaryLogoUrl) ? (
         <StyledSecondaryLogoContainer>
-          <StyledSecondaryLogo src={secondaryLogoUrl} />
+          <StyledSecondaryLogo
+            src={secondaryLogoUrl}
+            onError={(event) => {
+              const target = event.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
         </StyledSecondaryLogoContainer>
       ) : (
         isDefined(placeholder) && (
