@@ -56,7 +56,7 @@ export const Logo = ({
   onClick,
 }: LogoProps) => {
   const { redirectToDefaultDomain } = useRedirectToDefaultDomain();
-  const defaultPrimaryLogoUrl = `${window.location.origin}/branding/abcorp-logo.svg`;
+  const defaultPrimaryLogoUrl = `${window.location.origin}/branding/abcorp-logo.png?v=2`;
 
   // For static files in /public/, use the URL directly without getImageAbsoluteURI
   // getImageAbsoluteURI is for server-uploaded files in /files/, not static assets
@@ -98,15 +98,6 @@ export const Logo = ({
           <StyledPrimaryLogo
             src={primaryLogoUrl}
             alt="AB Corp"
-            onError={(e) => {
-              // Fallback to PNG if SVG fails
-              const target = e.target as HTMLImageElement;
-              if (
-                target.src !== `${window.location.origin}/branding/abcorp-logo.png`
-              ) {
-                target.src = '/branding/abcorp-logo.png';
-              }
-            }}
           />
         </UndecoratedLink>
       ) : (

@@ -101,19 +101,14 @@ export const WelcomeLanding = () => {
     }
   }, [guestCredentialsConfigured]);
 
+  const logoUrl = useMemo(() => `/branding/abcorp-logo.png?v=2`, []);
+
   return (
     <StyledContainer>
       <StyledLogo
-        src="/branding/abcorp-logo.svg"
+        src={logoUrl}
         alt={t`Company logo`}
         draggable={false}
-        onError={(e) => {
-          // Fallback to PNG if SVG fails
-          const target = e.target as HTMLImageElement;
-          if (target.src !== `${window.location.origin}/branding/abcorp-logo.png`) {
-            target.src = '/branding/abcorp-logo.png';
-          }
-        }}
       />
 
       <StyledButtonGroup>
