@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { isNonEmptyString } from '@sniptt/guards';
 import { AppPath } from 'twenty-shared/types';
 import { getImageAbsoluteURI, isDefined } from 'twenty-shared/utils';
@@ -87,6 +88,29 @@ export const Logo = ({
     : null;
 
   const isUsingDefaultLogo = !isDefined(primaryLogo);
+  const [isSecondaryLogoVisible, setIsSecondaryLogoVisible] = useState(true);
+
+  // #region agent log
+  fetch(
+    'http://127.0.0.1:7888/ingest/cdd0bf20-cf35-4460-b3a4-5ccefba44a6d',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Debug-Session-Id': '47bed2',
+      },
+      body: JSON.stringify({
+        sessionId: '47bed2',
+        runId: 'pre-fix-logo',
+        hypothesisId: 'H1',
+        location: 'Logo.tsx:render',
+        message: 'Logo render data',
+        data: { primaryLogoUrl, secondaryLogoUrl, isUsingDefaultLogo },
+        timestamp: Date.now(),
+      }),
+    },
+  ).catch(() => {});
+  // #endregion agent log
 
   return (
     <StyledContainer onClick={() => onClick?.()}>
@@ -103,13 +127,37 @@ export const Logo = ({
       ) : (
         <StyledPrimaryLogo src={primaryLogoUrl} alt="AB Corp" />
       )}
-      {isDefined(secondaryLogoUrl) ? (
+      {isDefined(secondaryLogoUrl) && isSecondaryLogoVisible ? (
         <StyledSecondaryLogoContainer>
           <StyledSecondaryLogo
             src={secondaryLogoUrl}
             onError={(event) => {
               const target = event.target as HTMLImageElement;
               target.style.display = 'none';
+
+              // #region agent log
+              fetch(
+                'http://127.0.0.1:7888/ingest/cdd0bf20-cf35-4460-b3a4-5ccefba44a6d',
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-Debug-Session-Id': '47bed2',
+                  },
+                  body: JSON.stringify({
+                    sessionId: '47bed2',
+                    runId: 'pre-fix-logo',
+                    hypothesisId: 'H2',
+                    location: 'Logo.tsx:secondaryOnError',
+                    message: 'Secondary logo failed to load',
+                    data: { src: target.src },
+                    timestamp: Date.now(),
+                  }),
+                },
+              ).catch(() => {});
+              // #endregion agent log
+
+              setIsSecondaryLogoVisible(false);
             }}
           />
         </StyledSecondaryLogoContainer>
