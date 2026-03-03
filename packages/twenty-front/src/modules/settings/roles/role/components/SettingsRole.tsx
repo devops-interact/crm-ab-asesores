@@ -55,7 +55,7 @@ export const SettingsRole = ({ roleId, isCreateMode }: SettingsRoleProps) => {
 
   const { loadCurrentUser } = useLoadCurrentUser();
 
-  const { enqueueErrorSnackBar } = useSnackBar();
+  const { enqueueSuccessSnackBar, enqueueErrorSnackBar } = useSnackBar();
 
   const { saveDraftRoleToDB } = useSaveDraftRoleToDB({
     isCreateMode,
@@ -114,10 +114,13 @@ export const SettingsRole = ({ roleId, isCreateMode }: SettingsRoleProps) => {
       await saveDraftRoleToDB();
       await loadCurrentUser();
       await refreshObjectMetadataItems();
+      enqueueSuccessSnackBar({ message: 'Role guardado exitosamente' });
     } catch (error: any) {
       console.error('Error saving role:', error);
       enqueueErrorSnackBar({
-        message: error?.message || t`An error occurred while saving the role. Check console.`,
+        message:
+          error?.message ||
+          t`An error occurred while saving the role. Check console.`,
       });
     } finally {
       setIsSaving(false);

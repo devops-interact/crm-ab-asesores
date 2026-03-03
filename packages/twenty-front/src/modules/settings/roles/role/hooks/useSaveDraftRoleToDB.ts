@@ -11,11 +11,11 @@ import { useRecoilValue } from 'recoil';
 import { SettingsPath } from 'twenty-shared/types';
 import { isDefined, isNonEmptyArray } from 'twenty-shared/utils';
 import {
-  useCreateOneRoleMutation,
-  useUpdateOneRoleMutation,
-  useUpsertFieldPermissionsMutation,
-  useUpsertObjectPermissionsMutation,
-  useUpsertPermissionFlagsMutation,
+    useCreateOneRoleMutation,
+    useUpdateOneRoleMutation,
+    useUpsertFieldPermissionsMutation,
+    useUpsertObjectPermissionsMutation,
+    useUpsertPermissionFlagsMutation,
 } from '~/generated-metadata/graphql';
 import { type Role } from '~/generated/graphql';
 import { useNavigateSettings } from '~/hooks/useNavigateSettings';
@@ -142,6 +142,7 @@ export const useSaveDraftRoleToDB = ({
       if (!data) {
         return;
       }
+      console.log("Created Role Successfully:", data.createOneRole.id);
 
       if (isDefined(dirtyFields.permissionFlags)) {
         await upsertPermissionFlags({
@@ -156,6 +157,7 @@ export const useSaveDraftRoleToDB = ({
           },
           refetchQueries: [getOperationName(GET_ROLES) ?? ''],
         });
+        console.log("upsertPermissionFlags done");
       }
 
       if (isDefined(dirtyFields.objectPermissions)) {
@@ -180,6 +182,7 @@ export const useSaveDraftRoleToDB = ({
           },
           refetchQueries: [getOperationName(GET_ROLES) ?? ''],
         });
+        console.log("upsertObjectPermissions done");
       }
 
       if (isNonEmptyArray(fieldPermissionsToUpsert) === true) {
@@ -210,6 +213,7 @@ export const useSaveDraftRoleToDB = ({
             (member) => member.id,
           ),
         });
+        console.log("addWorkspaceMembersToRole done");
       }
 
       if (
@@ -220,6 +224,7 @@ export const useSaveDraftRoleToDB = ({
           roleId: data.createOneRole.id,
           agentIds: settingsDraftRole.agents.map((agent) => agent.id),
         });
+        console.log("addAgentsToRole done");
       }
 
       if (
@@ -230,7 +235,10 @@ export const useSaveDraftRoleToDB = ({
           roleId: data.createOneRole.id,
           apiKeyIds: settingsDraftRole.apiKeys.map((apiKey) => apiKey.id),
         });
+        console.log("addApiKeysToRole done");
       }
+
+      console.log("Navigating Settings!");
 
       navigateSettings(SettingsPath.RoleDetail, {
         roleId: data.createOneRole.id,
