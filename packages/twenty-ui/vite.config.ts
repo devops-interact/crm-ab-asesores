@@ -76,7 +76,6 @@ export default defineConfig(({ command }) => {
       }),
       svgr(),
       dts(dtsConfig),
-      checker(checkersConfig),
       wyw({
         include: [
           '**/OverflowingTextWithTooltip.tsx',

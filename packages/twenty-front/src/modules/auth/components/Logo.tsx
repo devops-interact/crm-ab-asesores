@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { isNonEmptyString } from '@sniptt/guards';
+import { useState } from 'react';
 import { AppPath } from 'twenty-shared/types';
 import { getImageAbsoluteURI, isDefined } from 'twenty-shared/utils';
-import { Avatar } from 'twenty-ui/display';
 import { UndecoratedLink } from 'twenty-ui/navigation';
 import { REACT_APP_SERVER_BASE_URL } from '~/config';
 import { useRedirectToDefaultDomain } from '~/modules/domain-manager/hooks/useRedirectToDefaultDomain';
@@ -126,52 +125,6 @@ export const Logo = ({
         </UndecoratedLink>
       ) : (
         <StyledPrimaryLogo src={primaryLogoUrl} alt="AB Corp" />
-      )}
-      {isDefined(secondaryLogoUrl) && isSecondaryLogoVisible ? (
-        <StyledSecondaryLogoContainer>
-          <StyledSecondaryLogo
-            src={secondaryLogoUrl}
-            onError={(event) => {
-              const target = event.target as HTMLImageElement;
-              target.style.display = 'none';
-
-              // #region agent log
-              fetch(
-                'http://127.0.0.1:7888/ingest/cdd0bf20-cf35-4460-b3a4-5ccefba44a6d',
-                {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'X-Debug-Session-Id': '47bed2',
-                  },
-                  body: JSON.stringify({
-                    sessionId: '47bed2',
-                    runId: 'pre-fix-logo',
-                    hypothesisId: 'H2',
-                    location: 'Logo.tsx:secondaryOnError',
-                    message: 'Secondary logo failed to load',
-                    data: { src: target.src },
-                    timestamp: Date.now(),
-                  }),
-                },
-              ).catch(() => {});
-              // #endregion agent log
-
-              setIsSecondaryLogoVisible(false);
-            }}
-          />
-        </StyledSecondaryLogoContainer>
-      ) : (
-        isDefined(placeholder) && (
-          <StyledSecondaryLogoContainer>
-            <Avatar
-              size="lg"
-              placeholder={placeholder}
-              type="squared"
-              placeholderColorSeed={placeholder}
-            />
-          </StyledSecondaryLogoContainer>
-        )
       )}
     </StyledContainer>
   );
