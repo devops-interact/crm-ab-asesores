@@ -6,6 +6,7 @@ import { useRemoveFieldPermissionInDraftRole } from '@/settings/roles/role-permi
 import { newFieldPermissionsFilter } from '@/settings/roles/role/hooks/utils/newFieldPermissionsFilter.util';
 import { settingsDraftRoleFamilyState } from '@/settings/roles/states/settingsDraftRoleFamilyState';
 import { settingsPersistedRoleFamilyState } from '@/settings/roles/states/settingsPersistedRoleFamilyState';
+import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { getOperationName } from '@apollo/client/utilities';
 import { useRecoilValue } from 'recoil';
 import { SettingsPath } from 'twenty-shared/types';
@@ -51,6 +52,7 @@ export const useSaveDraftRoleToDB = ({
   const { addWorkspaceMembersToRole } = useUpdateWorkspaceMemberRole(roleId);
   const { addAgentsToRole } = useUpdateAgentRole(roleId);
   const { addApiKeysToRole } = useUpdateApiKeyRole(roleId);
+  const { enqueueSuccessSnackBar } = useSnackBar();
   const navigateSettings = useNavigateSettings();
 
   const settingsPersistedRole = useRecoilValue(
@@ -135,6 +137,19 @@ export const useSaveDraftRoleToDB = ({
             canBeAssignedToAgents: settingsDraftRole.canBeAssignedToAgents,
             canBeAssignedToApiKeys: settingsDraftRole.canBeAssignedToApiKeys,
           } satisfies Partial<Role>,
+        },
+        update(cache, { data: mutationData }) {
+          if (!mutationData?.createOneRole) return;
+          const newRole = mutationData.createOneRole;
+          const existingRoles: any = cache.readQuery({ query: GET_ROLES });
+          if (existingRoles && existingRoles.getRoles) {
+            cache.writeQuery({
+              query: GET_ROLES,
+              data: {
+                getRoles: [...existingRoles.getRoles, newRole]
+              }
+            });
+          }
         },
         refetchQueries: [getOperationName(GET_ROLES) ?? ''],
       });
@@ -235,10 +250,11 @@ export const useSaveDraftRoleToDB = ({
           roleId: data.createOneRole.id,
           apiKeyIds: settingsDraftRole.apiKeys.map((apiKey) => apiKey.id),
         });
-        console.log('addApiKeysToRole done');
+        console.error('addApiKeysToRole done');
       }
 
-      console.log('Navigating Settings!');
+      enqueueSuccessSnackBar({ message: 'Role guardado exitosamente' });
+      console.error('Navigating Settings!');
 
       navigateSettings(SettingsPath.RoleDetail, {
         roleId: data.createOneRole.id,
@@ -331,6 +347,7 @@ export const useSaveDraftRoleToDB = ({
         });
       }
     }
+    enqueueSuccessSnackBar({ message: 'Role guardado exitosamente' });
   };
 
   return {
