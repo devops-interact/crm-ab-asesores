@@ -138,20 +138,8 @@ export const useSaveDraftRoleToDB = ({
             canBeAssignedToApiKeys: settingsDraftRole.canBeAssignedToApiKeys,
           } satisfies Partial<Role>,
         },
-        update(cache, { data: mutationData }) {
-          if (!mutationData?.createOneRole) return;
-          const newRole = mutationData.createOneRole;
-          const existingRoles: any = cache.readQuery({ query: GET_ROLES });
-          if (existingRoles && existingRoles.getRoles) {
-            cache.writeQuery({
-              query: GET_ROLES,
-              data: {
-                getRoles: [...existingRoles.getRoles, newRole]
-              }
-            });
-          }
-        },
-        refetchQueries: [getOperationName(GET_ROLES) ?? ''],
+        refetchQueries: [{ query: GET_ROLES }],
+        awaitRefetchQueries: true,
       });
 
       if (!data) {
