@@ -20,6 +20,19 @@ export const SettingsRoleSettingsDeleteRoleConfirmationModal = ({
   const handleConfirmClick = async () => {
     await deleteRole({
       variables: { roleId },
+      update: (cache) => {
+        cache.modify({
+          fields: {
+            getRoles(existingRoleRefs, { readField }) {
+              return existingRoleRefs.filter(
+                (roleRef: any) => roleId !== readField('id', roleRef),
+              );
+            },
+          },
+        });
+        cache.evict({ id: `Role:${roleId}` });
+        cache.gc();
+      },
     });
     navigateSettings(SettingsPath.Roles);
   };

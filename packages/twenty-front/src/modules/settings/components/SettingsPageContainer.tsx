@@ -50,34 +50,6 @@ export const SettingsPageContainer = ({
 
   const componentInstanceId = `scroll-wrapper-settings-page-container-${settingsPath}`;
 
-  // #region agent log
-  if (typeof window !== 'undefined') {
-    fetch(
-      'http://127.0.0.1:7888/ingest/cdd0bf20-cf35-4460-b3a4-5ccefba44a6d',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Debug-Session-Id': '47bed2',
-        },
-        body: JSON.stringify({
-          sessionId: '47bed2',
-          runId: 'pre-fix-layout',
-          hypothesisId: 'H4',
-          location: 'SettingsPageContainer.tsx:render',
-          message: 'Settings page layout data',
-          data: {
-            settingsPath,
-            innerWidth: window.innerWidth,
-            objectSettingsWidth: OBJECT_SETTINGS_WIDTH,
-          },
-          timestamp: Date.now(),
-        }),
-      },
-    ).catch(() => {});
-  }
-  // #endregion agent log
-
   useScrollRestoration(componentInstanceId);
 
   return (
