@@ -7,14 +7,14 @@ import { Repository } from 'typeorm';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { MEMBER_ROLE_LABEL } from 'src/engine/metadata-modules/permissions/constants/member-role-label.constants';
 import {
-  PermissionsException,
-  PermissionsExceptionCode,
-  PermissionsExceptionMessage,
+    PermissionsException,
+    PermissionsExceptionCode,
+    PermissionsExceptionMessage,
 } from 'src/engine/metadata-modules/permissions/permissions.exception';
 import { type CreateRoleInput } from 'src/engine/metadata-modules/role/dtos/create-role-input.dto';
 import {
-  type UpdateRoleInput,
-  type UpdateRolePayload,
+    type UpdateRoleInput,
+    type UpdateRolePayload,
 } from 'src/engine/metadata-modules/role/dtos/update-role-input.dto';
 import { RoleEntity } from 'src/engine/metadata-modules/role/role.entity';
 import { UserRoleService } from 'src/engine/metadata-modules/user-role/user-role.service';
@@ -363,13 +363,23 @@ export class RoleService {
       );
 
     await Promise.all(
-      userWorkspaceIds.map((userWorkspaceId) =>
-        this.userRoleService.assignRoleToUserWorkspace({
-          userWorkspaceId,
-          roleId: defaultRoleId,
-          workspaceId,
-        }),
-      ),
+      userWorkspaceIds.map(async (userWorkspaceId) => {
+        try {
+          await this.userRoleService.assignRoleToUserWorkspace({
+            userWorkspaceId,
+            roleId: defaultRoleId,
+            workspaceId,
+          });
+        } catch (error) {
+          if (
+            error instanceof PermissionsException &&
+            error.code === PermissionsExceptionCode.USER_WORKSPACE_NOT_FOUND
+          ) {
+            return;
+          }
+          throw error;
+        }
+      }),
     );
   }
 

@@ -9,9 +9,9 @@ import { ApiKeyRoleService } from 'src/engine/core-modules/api-key/api-key-role.
 import { PermissionFlagType } from 'src/engine/metadata-modules/permissions/constants/permission-flag-type.constants';
 import { TOOL_PERMISSION_FLAGS } from 'src/engine/metadata-modules/permissions/constants/tool-permission-flags';
 import {
-  PermissionsException,
-  PermissionsExceptionCode,
-  PermissionsExceptionMessage,
+    PermissionsException,
+    PermissionsExceptionCode,
+    PermissionsExceptionMessage,
 } from 'src/engine/metadata-modules/permissions/permissions.exception';
 import { type UserWorkspacePermissions } from 'src/engine/metadata-modules/permissions/types/user-workspace-permissions';
 import { RoleEntity } from 'src/engine/metadata-modules/role/role.entity';
@@ -106,6 +106,7 @@ export class PermissionsService {
         [PermissionFlagType.EXPORT_CSV]: false,
         [PermissionFlagType.IMPERSONATE]: false,
         [PermissionFlagType.SSO_BYPASS]: false,
+        [PermissionFlagType.LAYOUTS]: false,
       },
       objectsPermissions: {},
     }) as const satisfies UserWorkspacePermissions;
