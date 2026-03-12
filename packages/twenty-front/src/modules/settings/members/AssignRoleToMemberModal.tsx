@@ -93,7 +93,8 @@ export const AssignRoleToMemberModal = ({
 
   // Mostrar todos los roles disponibles (sin filtrar por canBeAssignedToUsers)
   // El backend validará si el rol puede ser asignado si es necesario
-  const availableRoles = rolesData?.getRoles ?? [];
+  const availableRoles =
+    rolesData?.getRoles?.filter((role) => role.canBeAssignedToUsers) ?? [];
 
   const handleConfirm = () => {
     if (selectedRoleId !== undefined) {

@@ -984,6 +984,11 @@ msgstr "사용자 존재 여부 확인 중 오류가 발생했습니다"
 msgid "An error occurred while processing your message"
 msgstr "메시지를 처리하는 중 오류가 발생했습니다"
 
+#. js-lingui-id: QrfHCd
+#: src/modules/settings/roles/role/components/SettingsRole.tsx
+msgid "An error occurred while saving the role. Check console."
+msgstr ""
+
 #. js-lingui-id: XyOToQ
 #: src/utils/get-error-message-from-apollo-error.util.ts
 #: src/utils/get-error-message-from-apollo-error.util.ts

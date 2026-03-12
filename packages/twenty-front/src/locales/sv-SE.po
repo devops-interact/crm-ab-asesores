@@ -984,6 +984,11 @@ msgstr "Ett fel uppstod vid kontroll av användares existens"
 msgid "An error occurred while processing your message"
 msgstr "Ett fel inträffade vid bearbetningen av ditt meddelande"
 
+#. js-lingui-id: QrfHCd
+#: src/modules/settings/roles/role/components/SettingsRole.tsx
+msgid "An error occurred while saving the role. Check console."
+msgstr ""
+
 #. js-lingui-id: XyOToQ
 #: src/utils/get-error-message-from-apollo-error.util.ts
 #: src/utils/get-error-message-from-apollo-error.util.ts

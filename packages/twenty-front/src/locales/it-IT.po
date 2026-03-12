@@ -984,6 +984,11 @@ msgstr "Si è verificato un errore durante il controllo dell'esistenza dell'uten
 msgid "An error occurred while processing your message"
 msgstr "Si è verificato un errore durante l'elaborazione del messaggio"
 
+#. js-lingui-id: QrfHCd
+#: src/modules/settings/roles/role/components/SettingsRole.tsx
+msgid "An error occurred while saving the role. Check console."
+msgstr ""
+
 #. js-lingui-id: XyOToQ
 #: src/utils/get-error-message-from-apollo-error.util.ts
 #: src/utils/get-error-message-from-apollo-error.util.ts

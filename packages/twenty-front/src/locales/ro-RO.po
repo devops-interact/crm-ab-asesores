@@ -984,6 +984,11 @@ msgstr "A survenit o eroare în timpul verificării existenței utilizatorului"
 msgid "An error occurred while processing your message"
 msgstr "A apărut o eroare la procesarea mesajului dumneavoastră"
 
+#. js-lingui-id: QrfHCd
+#: src/modules/settings/roles/role/components/SettingsRole.tsx
+msgid "An error occurred while saving the role. Check console."
+msgstr ""
+
 #. js-lingui-id: XyOToQ
 #: src/utils/get-error-message-from-apollo-error.util.ts
 #: src/utils/get-error-message-from-apollo-error.util.ts

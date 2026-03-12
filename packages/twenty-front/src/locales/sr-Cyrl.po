@@ -984,6 +984,11 @@ msgstr "Дошло је до грешке приликом провере пос
 msgid "An error occurred while processing your message"
 msgstr "Дошло је до грешке приликом обраде ваше поруке"
 
+#. js-lingui-id: QrfHCd
+#: src/modules/settings/roles/role/components/SettingsRole.tsx
+msgid "An error occurred while saving the role. Check console."
+msgstr ""
+
 #. js-lingui-id: XyOToQ
 #: src/utils/get-error-message-from-apollo-error.util.ts
 #: src/utils/get-error-message-from-apollo-error.util.ts
