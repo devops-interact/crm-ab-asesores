@@ -330,6 +330,15 @@ export class ConfigVariables {
 
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.EMAIL_SETTINGS,
+    description: 'Resend API key for sending emails',
+    type: ConfigVariableType.STRING,
+    isSensitive: true,
+  })
+  @ValidateIf((env) => env.EMAIL_DRIVER === EmailDriver.RESEND)
+  EMAIL_RESEND_API_KEY: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.EMAIL_SETTINGS,
     description: 'SMTP host for sending emails',
     type: ConfigVariableType.STRING,
   })

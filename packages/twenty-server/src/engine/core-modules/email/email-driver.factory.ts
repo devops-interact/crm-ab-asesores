@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { type EmailDriverInterface } from 'src/engine/core-modules/email/drivers/interfaces/email-driver.interface';
 
 import { LoggerDriver } from 'src/engine/core-modules/email/drivers/logger.driver';
+import { ResendDriver } from 'src/engine/core-modules/email/drivers/resend.driver';
 import { SmtpDriver } from 'src/engine/core-modules/email/drivers/smtp.driver';
 import { EmailDriver } from 'src/engine/core-modules/email/enums/email-driver.enum';
 import { DriverFactoryBase } from 'src/engine/core-modules/twenty-config/dynamic-factory.base';
@@ -28,6 +29,14 @@ export class EmailDriverFactory extends DriverFactoryBase<EmailDriverInterface> 
       );
 
       return `smtp|${emailConfigHash}`;
+    }
+
+    if (driver === EmailDriver.RESEND) {
+      const emailConfigHash = this.getConfigGroupHash(
+        ConfigVariablesGroup.EMAIL_SETTINGS,
+      );
+
+      return `resend|${emailConfigHash}`;
     }
 
     throw new Error(`Unsupported email driver: ${driver}`);
@@ -70,6 +79,16 @@ export class EmailDriverFactory extends DriverFactoryBase<EmailDriverInterface> 
         }
 
         return new SmtpDriver(options);
+      }
+
+      case EmailDriver.RESEND: {
+        const apiKey = this.twentyConfigService.get('EMAIL_RESEND_API_KEY');
+
+        if (!apiKey) {
+          throw new Error('Resend driver requires EMAIL_RESEND_API_KEY to be defined');
+        }
+
+        return new ResendDriver(apiKey);
       }
 
       default:
