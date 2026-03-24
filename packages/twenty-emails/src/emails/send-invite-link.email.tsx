@@ -45,11 +45,11 @@ export const SendInviteLinkEmail = ({
 
   return (
     <BaseEmail width={333} locale={locale}>
-      <Title value={i18n._('Join your team on Twenty')} />
+      <Title value="Únete a tu equipo" />
       <MainText>
         <Trans
-          id="{senderName} (<0>{senderEmail}</0>) has invited you to join a workspace called <1>{workspaceName}</1>."
-          values={{ senderName, senderEmail, workspaceName }}
+          id="{senderName} (<0>{senderEmail}</0>) te ha invitado a unirte a la plataforma de gestión de clientes (CRM) de AB Corporativo."
+          values={{ senderName, senderEmail }}
           components={{
             0: (
               <Link
@@ -58,7 +58,6 @@ export const SendInviteLinkEmail = ({
                 color={emailTheme.font.colors.blue}
               />
             ),
-            1: <b />,
           }}
         />
         <br />
