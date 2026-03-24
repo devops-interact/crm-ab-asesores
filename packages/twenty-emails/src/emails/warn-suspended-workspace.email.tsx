@@ -51,14 +51,14 @@ export const WarnSuspendedWorkspaceEmail = ({
         <br />
         <br />
         <Trans
-          id="If you wish to continue using Twenty, please update your subscription within the next {remainingDays} {dayOrDays}."
+          id="Si deseas continuar usando el CRM de AB Corporativo, por favor actualiza tu suscripción en los próximos {remainingDays} {dayOrDays}."
           values={{ remainingDays, dayOrDays }}
         />
       </MainText>
       <br />
       <CallToAction
-        href="https://app.twenty.com/settings/billing"
-        value={i18n._('Update your subscription')}
+        href="https://crm.abcorporativo.com/settings/billing"
+        value="Actualizar tu suscripción"
       />
       <br />
       <br />

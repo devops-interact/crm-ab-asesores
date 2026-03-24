@@ -1,2 +1,2 @@
 export const DEFAULT_WORKSPACE_LOGO =
-  'https://twentyhq.github.io/placeholder-images/workspaces/twenty-logo.png';
+  'https://raw.githubusercontent.com/devops-interact/crm-ab-asesores/main/packages/twenty-front/public/branding/abcorp-logo.png';

@@ -14,6 +14,7 @@ import { capitalize } from 'src/utils/capitalize';
 import { createI18nInstance } from 'src/utils/i18n.utils';
 import { type APP_LOCALES } from 'twenty-shared/translations';
 import { getImageAbsoluteURI } from 'twenty-shared/utils';
+import { DEFAULT_WORKSPACE_LOGO } from 'src/constants/DefaultWorkspaceLogo';
 
 type SendInviteLinkEmailProps = {
   link: string;
@@ -63,16 +64,12 @@ export const SendInviteLinkEmail = ({
         <br />
       </MainText>
       <HighlightedContainer>
-        {workspaceLogo ? (
-          <Img
-            src={workspaceLogo}
-            width={40}
-            height={40}
-            alt="Workspace logo"
-          />
-        ) : (
-          <></>
-        )}
+        <Img
+          src={DEFAULT_WORKSPACE_LOGO}
+          width={40}
+          height={40}
+          alt="Workspace logo"
+        />
         {workspace.name ? <HighlightedText value={workspace.name} /> : <></>}
         <CallToAction href={link} value={i18n._('Accept invite')} />
       </HighlightedContainer>

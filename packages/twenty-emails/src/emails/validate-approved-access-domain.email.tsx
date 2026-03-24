@@ -66,7 +66,7 @@ export const SendApprovedAccessDomainValidation = ({
       </MainText>
       <HighlightedContainer>
         <Img
-          src={workspaceLogo ?? DEFAULT_WORKSPACE_LOGO}
+          src={DEFAULT_WORKSPACE_LOGO}
           width={40}
           height={40}
           alt={workspace.name ?? 'Workspace logo'}

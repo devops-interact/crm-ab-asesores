@@ -42,12 +42,12 @@ export const CleanSuspendedWorkspaceEmail = ({
         <Trans id="All data in this workspace has been permanently deleted." />
         <br />
         <br />
-        <Trans id="If you wish to use Twenty again, you can create a new workspace." />
+        <Trans id="Si deseas volver a usar el CRM de AB Corporativo, puedes crear un nuevo espacio." />
       </MainText>
       <br />
       <CallToAction
-        href="https://app.twenty.com/"
-        value={i18n._('Create a new workspace')}
+        href="https://crm.abcorporativo.com/"
+        value="Crear un nuevo espacio"
       />
       <br />
       <br />
