@@ -125,13 +125,7 @@ export const SignInUp = () => {
       return t`Verify code from the app`;
     }
 
-    const workspaceName = !isDefined(workspacePublicData?.displayName)
-      ? DEFAULT_WORKSPACE_NAME
-      : workspacePublicData?.displayName === ''
-        ? t`Your Workspace`
-        : workspacePublicData?.displayName;
-
-    return t`Welcome to ${workspaceName}`;
+    return t`Bienvenido a tu CRM`;
   }, [
     workspaceInviteHash,
     signInUpStep,

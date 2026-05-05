@@ -100,9 +100,9 @@ const bootstrap = async () => {
     generateFrontConfig();
     console.log('[BOOTSTRAP] Front config generated');
 
-    const port = twentyConfigService.get('NODE_PORT');
+    const port = process.env.PORT || twentyConfigService.get('NODE_PORT');
     console.log('[BOOTSTRAP] Starting server on port:', port);
-    await app.listen(port);
+    await app.listen(port, '0.0.0.0');
     console.log('[BOOTSTRAP] Server started successfully on port:', port);
   } catch (error) {
     console.error('[BOOTSTRAP] Fatal error during startup:', error);
