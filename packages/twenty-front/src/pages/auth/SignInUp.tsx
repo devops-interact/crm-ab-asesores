@@ -125,7 +125,7 @@ export const SignInUp = () => {
       return t`Verify code from the app`;
     }
 
-    return t`Bienvenido a tu CRM`;
+    return 'Bienvenido a tu CRM';
   }, [
     workspaceInviteHash,
     signInUpStep,
